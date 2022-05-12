@@ -3,6 +3,7 @@ import BooksContext from "../BooksContext";
 
 export default function Books({ book }) {
   const { bookShelfChanger } = useContext(BooksContext);
+
   return (
     <React.Fragment>
       <div className="book">
@@ -19,7 +20,7 @@ export default function Books({ book }) {
           ></div>
           <div className="book-shelf-changer">
             <select
-              value={book.shelf ? book.shelf : "none"}
+              defaultValue={book.shelf ? book.shelf : "none"}
               onChange={(e) => bookShelfChanger(book, e.target.value)}
             >
               <option value="move" disabled>

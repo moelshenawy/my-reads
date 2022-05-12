@@ -4,7 +4,8 @@ import BooksContext from "../BooksContext";
 import Books from "./Books";
 
 export default function Search() {
-  const { result, setResult, bookSearchResult } = useContext(BooksContext);
+  const { result, setResult, bookShelfChanger, mergedBooks } =
+    useContext(BooksContext);
 
   let navigate = useNavigate();
 
@@ -30,13 +31,14 @@ export default function Search() {
               value={result}
               onChange={(e) => setResult(e.target.value)}
             />
+            {console.log(mergedBooks)}
           </div>
         </div>
         <div className="search-books-results">
           <ol className="books-grid">
-            {bookSearchResult.map((book) => (
+            {mergedBooks.map((book) => (
               <li key={book.id}>
-                <Books book={book} bookSearchResult={bookSearchResult} />
+                <Books book={book} bookShelfChanger={bookShelfChanger} />
               </li>
             ))}
           </ol>

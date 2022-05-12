@@ -1,7 +1,7 @@
 import React from "react";
 import Books from "./Books";
 
-export default function Shelf({ title, booksShelf }) {
+export default function Shelf({ title, booksShelf,bookShelfChanger }) {
   return (
     <React.Fragment>
       <div className="bookshelf">
@@ -10,7 +10,7 @@ export default function Shelf({ title, booksShelf }) {
           <ol className="books-grid">
             {booksShelf.map((book) => (
               <li key={book.id}>
-                <Books book={book} />
+                <Books book={book}  bookShelfChanger={bookShelfChanger}/>
               </li>
             ))}
           </ol>

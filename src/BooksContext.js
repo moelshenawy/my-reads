@@ -11,12 +11,14 @@ export function BooksContextProvider(props) {
   // Setting query Search State
   const [result, setResult] = useState("");
   const [bookSearchResult, setBookSearchResult] = useState([]);
+  const [bookIdMap, setBookIdMap] = useState([new Map()]);
   const [mergedBooks, setMergedBooks] = useState([]);
 
   // Get All Books Data
   useEffect(() => {
     getAll().then((data) => {
       setAllBooks(data);
+      setBookIdMap(booksMap(data));
     });
   }, []);
 
@@ -58,19 +60,23 @@ export function BooksContextProvider(props) {
     };
   }, [result]);
 
-  // useEffect(() => {
-  //   if (allBooks.error) {
-  //     setBookSearchResult([]);
-  //     return;
-  //   }
+  useEffect(() => {
+    const combined = bookSearchResult.map((book) => {
+      if (bookIdMap.has(book.id)) {
+        return bookIdMap.get(book.id);
+      } else {
+        return book;
+      }
+    });
+    setMergedBooks(combined);
+  }, [bookSearchResult]);
 
-  //   const booksWithShelf = allBooks.map((book) => {
-  //     const bookShelf = allBooks.find((b) => b.id === book.id);
-  //     return { shelf: bookShelf ? bookShelf : "none" };
-  //   });
-
-  //   setBookSearchResult(booksWithShelf);
-  // }, [bookSearchResult]);
+  function booksMap(books) {
+    const map = new Map();
+    books.map((book) => map.set(book.id, book));
+    return map;
+  }
+  console.log(mergedBooks);
   return (
     <BooksContext.Provider
       value={{
@@ -79,6 +85,8 @@ export function BooksContextProvider(props) {
         result,
         setResult,
         bookSearchResult,
+        setBookSearchResult,
+        mergedBooks,
       }}
     >
       {props.children}

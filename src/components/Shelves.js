@@ -3,7 +3,7 @@ import Shelf from "./Shelf";
 import BooksContext from "../BooksContext";
 
 export default function Shelves() {
-  const { allBooks } = useContext(BooksContext);
+  const { allBooks, bookShelfChanger } = useContext(BooksContext);
 
   // Filter AllBooks To Send them to each
   const read = allBooks.filter((book) => book.shelf === "read");
@@ -12,13 +12,23 @@ export default function Shelves() {
     (book) => book.shelf === "currentlyReading"
   );
 
-  
-
   return (
     <React.Fragment>
-      <Shelf booksShelf={read} title={"Read"} />
-      <Shelf booksShelf={wantToRead} title={"Want To Read"} />
-      <Shelf booksShelf={currentlyReading} title={"Currently Reading"} />
+      <Shelf
+        booksShelf={read}
+        title={"Read"}
+        bookShelfChanger={bookShelfChanger}
+      />
+      <Shelf
+        booksShelf={wantToRead}
+        title={"Want To Read"}
+        bookShelfChanger={bookShelfChanger}
+      />
+      <Shelf
+        booksShelf={currentlyReading}
+        title={"Currently Reading"}
+        bookShelfChanger={bookShelfChanger}
+      />
     </React.Fragment>
   );
 }
